@@ -1,6 +1,7 @@
 import type { Request, Response } from "express";
 import sendResponse from "../../utils/sendResponse";
 import { authService } from "./auth.service";
+import type { IAuthData } from "./auth.interface";
 
 const createUser = async (req: Request, res: Response) => {
   try {
@@ -10,14 +11,13 @@ const createUser = async (req: Request, res: Response) => {
       statusCode: 201,
       success: true,
       message: "User registered Successfully!",
-      data: result[0]
+      data: result[0] as IAuthData
     });
 
   } catch (error: any) {
     sendResponse(res, {
       statusCode: 409,
       success: false,
-      data: {},
       message: error.message,
       error: error,
     });
@@ -39,7 +39,6 @@ const loginUser = async (req: Request, res: Response) => {
       sendResponse(res, {
       statusCode: 401,
       success: false,
-      data: {},
       message: error.message,
       error: error,
     });

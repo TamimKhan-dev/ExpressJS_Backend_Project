@@ -1,5 +1,16 @@
 export interface IIssue {
-    title: string;
-    description: string;
-    type: "bug" | "feature_request";
+  title: string;
+  description: string;
+  type: "bug" | "feature_request";
+}
+
+export interface IIssueData {
+  id: number;
+  title: string;
+  description: string;
+  type: string;
+  status: string;
+  reporter_id: number;
+  created_at: string;
+  updated_at: string;
 }
