@@ -23,7 +23,7 @@ const createIssues = async (req: Request, res: Response) => {
   }
 };
 
-const getAllIssues = async(req: Request, res: Response) => {
+const getAllIssues = async (req: Request, res: Response) => {
   try {
     const result = await issuesService.getAllIssuesFromDB(req.query);
 
@@ -43,7 +43,28 @@ const getAllIssues = async(req: Request, res: Response) => {
   }
 }
 
+const getSingleIssue = async (req: Request, res: Response) => {
+  try {
+    const result = await issuesService.getSingleIssueFromDB(Number(req.params.id))
+
+    sendResponse(res, {
+      statusCode: 200,
+      success: true,
+      message: "User retrived successfully!",
+      data: result
+    });
+  } catch (error: any) {
+    sendResponse(res, {
+      statusCode: 404,
+      success:false,
+      message: error.message,
+      error: error
+    })
+  }
+};
+
 export const issuesController = {
     createIssues,
     getAllIssues,
+    getSingleIssue
 }
