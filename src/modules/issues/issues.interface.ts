@@ -14,3 +14,9 @@ export interface IIssueData {
   created_at: string;
   updated_at: string;
 }
+
+export interface IIssuesQuery {
+  sort?: string;
+  status?: string;
+  type?: string;
+}

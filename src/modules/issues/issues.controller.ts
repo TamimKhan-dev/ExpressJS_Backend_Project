@@ -23,6 +23,27 @@ const createIssues = async (req: Request, res: Response) => {
   }
 };
 
+const getAllIssues = async(req: Request, res: Response) => {
+  try {
+    const result = await issuesService.getAllIssuesFromDB(req.query);
+
+    sendResponse(res, {
+      statusCode: 200,
+      success: true,
+      message: "All users retrived successfully!",
+      data: result
+    })
+  } catch (error: any) {
+    sendResponse(res, {
+      statusCode: 404,
+      success: false,
+      message: error.message,
+      error: error
+    })
+  }
+}
+
 export const issuesController = {
     createIssues,
+    getAllIssues,
 }
