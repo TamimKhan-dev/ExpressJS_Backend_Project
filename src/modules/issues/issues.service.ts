@@ -115,8 +115,15 @@ const updateSingleIssueIntoDB = async (
   return result;
 };
 
+const deleteIssueFromDB = async (id: number) => {
+   const result = await sql`DELETE FROM issues WHERE id=${id} RETURNING *`;
+
+   return result;
+};
+
 export const issuesService = {
   createIssueIntoDB,
+  deleteIssueFromDB,
   getAllIssuesFromDB,
   getSingleIssueFromDB,
   updateSingleIssueIntoDB,

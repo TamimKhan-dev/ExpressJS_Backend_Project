@@ -5,20 +5,23 @@ import type { IIssueData, IIssueUpdateData } from "./issues.interface";
 
 const createIssues = async (req: Request, res: Response) => {
   try {
-    const result = await issuesService.createIssueIntoDB(req.body, req.user?.id);
+    const result = await issuesService.createIssueIntoDB(
+      req.body,
+      req.user?.id,
+    );
 
     sendResponse(res, {
       statusCode: 201,
       success: true,
       message: "Issue created successfully!",
-      data: result[0] as IIssueData
+      data: result[0] as IIssueData,
     });
   } catch (error: any) {
     sendResponse(res, {
       statusCode: 401,
       success: false,
       message: error.message,
-      error: error
+      error: error,
     });
   }
 };
@@ -31,61 +34,95 @@ const getAllIssues = async (req: Request, res: Response) => {
       statusCode: 200,
       success: true,
       message: "All users retrived successfully!",
-      data: result
-    })
+      data: result,
+    });
   } catch (error: any) {
     sendResponse(res, {
       statusCode: 404,
       success: false,
       message: error.message,
-      error: error
-    })
+      error: error,
+    });
   }
-}
+};
 
 const getSingleIssue = async (req: Request, res: Response) => {
   try {
-    const result = await issuesService.getSingleIssueFromDB(Number(req.params.id))
+    const result = await issuesService.getSingleIssueFromDB(
+      Number(req.params.id),
+    );
 
     sendResponse(res, {
       statusCode: 200,
       success: true,
       message: "User retrived successfully!",
-      data: result
+      data: result,
     });
   } catch (error: any) {
     sendResponse(res, {
       statusCode: 404,
-      success:false,
+      success: false,
       message: error.message,
-      error: error
-    })
+      error: error,
+    });
   }
 };
 
 const updateSingleIssue = async (req: Request, res: Response) => {
   try {
-    const result = await issuesService.updateSingleIssueIntoDB(Number(req.params.id), req.headers.authorization as string, req.body);
+    const result = await issuesService.updateSingleIssueIntoDB(
+      Number(req.params.id),
+      req.headers.authorization as string,
+      req.body,
+    );
 
     sendResponse(res, {
       statusCode: 200,
       success: true,
       message: "Issue updated successfully!",
-      data: result[0] as IIssueUpdateData
-    })
+      data: result[0] as IIssueUpdateData,
+    });
   } catch (error: any) {
     sendResponse(res, {
       statusCode: 400,
       success: false,
       message: error.message,
-      error: error
-    })
+      error: error,
+    });
+  }
+};
+
+const deleteIssue = async (req: Request, res: Response) => {
+  try {
+    const result = await issuesService.deleteIssueFromDB(Number(req.params.id));
+
+    if (result.length === 0) {
+      sendResponse(res, {
+        statusCode: 404,
+        success: false,
+        message: "Issue not found!",
+      });
+    }
+
+    sendResponse(res, {
+      statusCode: 200,
+      success: true,
+      message: "Issue Deleted successfully!",
+    });
+  } catch (error: any) {
+    sendResponse(res, {
+      statusCode: 400,
+      success: false,
+      message: error.message,
+      error: error,
+    });
   }
 };
 
 export const issuesController = {
-    createIssues,
-    getAllIssues,
-    getSingleIssue,
-    updateSingleIssue
-}
+  deleteIssue,
+  createIssues,
+  getAllIssues,
+  getSingleIssue,
+  updateSingleIssue,
+};
