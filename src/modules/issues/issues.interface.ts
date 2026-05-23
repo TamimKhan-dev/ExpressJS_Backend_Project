@@ -20,3 +20,20 @@ export interface IIssuesQuery {
   status?: string;
   type?: string;
 }
+
+export interface IIssueUpdate {
+  title: string;
+  description: string;
+  type: string;
+}
+
+export interface IIssueUpdateData {
+  id: number;
+  title: string;
+  description: string;
+  type: string;
+  status: string;
+  reporter_id: number;
+  created_at: string;
+  updated_at: string;
+}

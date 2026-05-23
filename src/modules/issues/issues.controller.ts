@@ -1,7 +1,7 @@
 import { type Request, type Response } from "express";
 import sendResponse from "../../utils/sendResponse";
 import { issuesService } from "./issues.service";
-import type { IIssueData } from "./issues.interface";
+import type { IIssueData, IIssueUpdateData } from "./issues.interface";
 
 const createIssues = async (req: Request, res: Response) => {
   try {
@@ -63,8 +63,29 @@ const getSingleIssue = async (req: Request, res: Response) => {
   }
 };
 
+const updateSingleIssue = async (req: Request, res: Response) => {
+  try {
+    const result = await issuesService.updateSingleIssueIntoDB(Number(req.params.id), req.headers.authorization as string, req.body);
+
+    sendResponse(res, {
+      statusCode: 200,
+      success: true,
+      message: "Issue updated successfully!",
+      data: result[0] as IIssueUpdateData
+    })
+  } catch (error: any) {
+    sendResponse(res, {
+      statusCode: 400,
+      success: false,
+      message: error.message,
+      error: error
+    })
+  }
+};
+
 export const issuesController = {
     createIssues,
     getAllIssues,
-    getSingleIssue
+    getSingleIssue,
+    updateSingleIssue
 }
