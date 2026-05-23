@@ -14,9 +14,7 @@ const app: Application = express();
 app.use(express.json());
 app.use(express.text());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors({
-  origin: "http://localhost:5000"
-}))
+app.use(cors());
 
 app.get("/", (req: Request, res: Response) => {
   res.status(200).json({
@@ -27,7 +25,6 @@ app.get("/", (req: Request, res: Response) => {
 
 app.use("/api/auth", authRoute);
 app.use("/api/issues", issuesRoute);
-
 
 app.use(globalErrorHandler);
 

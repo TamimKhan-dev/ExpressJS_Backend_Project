@@ -29,7 +29,7 @@ const loginUser = async (req: Request, res: Response) => {
       const result = await authService.loginUserIntoDB(req.body);
       
       sendResponse(res, {
-      statusCode: 201,
+      statusCode: 200,
       success: true,
       message: "Login successful!",
       data: result

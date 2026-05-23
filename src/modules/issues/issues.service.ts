@@ -30,8 +30,7 @@ const getAllIssuesFromDB = async (query: IIssuesQuery) => {
 
   const reporterIds = [...new Set(issues.map((issue) => issue.reporter_id))];
 
-  const reporters =
-    await sql`SELECT id, name, role FROM users WHERE id = ANY(${reporterIds})`;
+  const reporters = await sql`SELECT id, name, role FROM users WHERE id = ANY(${reporterIds})`;
 
   const reporterMap = reporters.reduce((acc, reporter) => {
     acc[reporter.id] = reporter;
@@ -43,7 +42,7 @@ const getAllIssuesFromDB = async (query: IIssuesQuery) => {
     reporter: reporterMap[issue.reporter_id],
     reporter_id: undefined,
   }));
-
+  
   return data;
 };
 
